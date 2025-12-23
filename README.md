@@ -2,9 +2,9 @@
 This's a simple exercise for SQL cleaning
 
 ## Inspect the initial data:
-'''sql
+```sql
 SELECT * FROM club_member_clean LIMIT 10;
-'''
+```
 Result:
 |full_name|age|martial_status|email|phone|full_address|job_title|membership_date|
 |---------|---|--------------|-----|-----|------------|---------|---------------|
