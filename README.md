@@ -40,6 +40,18 @@ SET martial_status =
 		ELSE martial_status
 	 END;
 ```
+- Check martial_status column again
+```SQL
+SELECT DISTINCT martial_status FROM club_member_clean;
+```
+Resule:
+|martial_status|
+|--------------|
+|married|
+|divorced|
+||
+|single|
+
 ### Valid age explanation: 18 – 80, Handing missing and invalid age values
 - Check max/ min of Age
 ``` SQL
@@ -73,6 +85,11 @@ FROM club_member_clean
 WHERE age IS NULL OR age < 0 OR age > 80
 GROUP BY age;
 ```
+Result:
+|age|COUNT(*)|
+|---|--------|
+||18|
+
 ### Handing leading and trailing whitespaces
 ```SQL
 UPDATE club_member_clean
