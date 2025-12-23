@@ -22,11 +22,10 @@ Result:
 ## Data Issues Identified
 - Missing and invalid age values 
 - Inconsistent letter case
-- Membership date stored as NVARCHAR
 - Leading and trailing whitespaces
 
 ## Data cleaning
-- Handling inconsistent data
+### Handling inconsistent data
 ```SQL
 UPDATE club_member_clean
 SET full_name = TRIM(UPPER(full_name));
@@ -41,18 +40,23 @@ SET martial_status =
 		ELSE martial_status
 	 END;
 ```
-- Valid age explanation: 18 – 80, Handing missing and invalid age values
+### Valid age explanation: 18 – 80, Handing missing and invalid age values
+- Check max/ min of Age
 ``` SQL
 SELECT
     MIN(age) AS min_age,
     MAX(age) AS max_age
 FROM club_member_clean;
-
+```
+- Check count of outlier and null
+```SQL
 SELECT age, COUNT(*)
 FROM club_member_clean
 WHERE age IS NULL OR age < 0 OR age > 80
 GROUP BY age;
-
+```
+- Handing issue
+```SQL
 UPDATE club_member_clean
 SET age = 
 	CASE
@@ -61,11 +65,23 @@ SET age =
 		WHEN age > 80 THEN NULL
 		ELSE age
 	END;
-
+```
+- Check column Age again
+```SQL
 SELECT age, COUNT(*)
 FROM club_member_clean
 WHERE age IS NULL OR age < 0 OR age > 80
 GROUP BY age;
+```
+### Handing leading and trailing whitespaces
+```SQL
+UPDATE club_member_clean
+SET
+    email           = TRIM(email),
+    phone           = TRIM(phone),
+    full_address    = TRIM(full_address),
+    job_title       = TRIM(job_title),
+    membership_date = TRIM(membership_date);
 ```
 
 
